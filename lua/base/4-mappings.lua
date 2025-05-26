@@ -612,10 +612,10 @@ if is_available("gitsigns.nvim") then
     function() require("gitsigns").stage_buffer() end,
     desc = "Stage Git buffer",
   }
-  maps.n["<leader>gu"] = {
-    function() require("gitsigns").undo_stage_hunk() end,
-    desc = "Unstage Git hunk",
-  }
+  -- maps.n["<leader>gu"] = {
+  --   function() require("gitsigns").stage_hunk() end,
+  --   desc = "Unstage Git hunk",
+  -- }
   maps.n["<leader>gd"] = {
     function() require("gitsigns").diffthis() end,
     desc = "View Git diff",
@@ -1338,7 +1338,7 @@ function M.lsp_mappings(client, bufnr)
   -- @return boolean # `true` if any of the clients provide the capability.
   local function has_capability(capability, filter)
     for _, lsp_client in ipairs(vim.lsp.get_clients(filter)) do
-      if lsp_client.supports_method(capability) then return true end
+      if lsp_client:supports_method(capability) then return true end
     end
     return false
   end
