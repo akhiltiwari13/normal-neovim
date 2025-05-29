@@ -83,6 +83,8 @@ local icons = {
   g = { desc = get_icon("Git", true) .. " Git" },
   S = { desc = get_icon("Session", true) .. " Session" },
   t = { desc = get_icon("Terminal", true) .. " Terminal" },
+  -- x = { desc = get_icon("ccls", true) .. " Terminal" },
+  x = { desc = "ccls" .. " Terminal" },
 }
 
 -- standard Operations -----------------------------------------------------
@@ -403,7 +405,7 @@ maps.n["<leader>bsi"] = {
 }
 maps.n["<leader>bsm"] = {
   function() require("heirline-components.buffer").sort("modified") end,
-  desc = "Sort by modification (buffers)",
+ desc = "Sort by modification (buffers)",
 }
 maps.n["<leader>b\\"] = {
   function()
@@ -963,6 +965,7 @@ if is_available("telescope.nvim") then
     desc = "Find text in project (respecting .gitignore)",
   }
   -- Some lsp keymappings are here because they depend on telescope
+  maps.n["<leader>x"] = icons.x
   maps.n["<leader>l"] = icons.l
   maps.n["<leader>ls"] = {
     function()

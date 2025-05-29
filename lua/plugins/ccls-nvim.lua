@@ -125,7 +125,7 @@ return {
       vim.api.nvim_set_keymap("n", "<leader>xqo", ":CclsOutgoingCalls<CR>", opts)
       vim.api.nvim_set_keymap("n", "<leader>xqm", ":CclsMember<CR>", opts)
       vim.api.nvim_set_keymap("n", "<leader>xqf", ":CclsMemberFunction<CR>", opts)
-      vim.api.nvim_set_keymap("n", "<leader>xqt", ":CclsMemberType<CR>", opts)
+     vim.api.nvim_set_keymap("n", "<leader>xqt", ":CclsMemberType<CR>", opts)
 
       -- Auto-close NodeTree windows on jump (set this to false if you want to keep the tree open)
       vim.g.ccls_close_on_jump = true

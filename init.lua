@@ -46,3 +46,6 @@ load_sources({
 })
 load_colorscheme(vim.g.default_colorscheme)
 load_sources_async({ "base.4-mappings" })
+
+-- diagnostics setup
+require('config.diagnostics')
