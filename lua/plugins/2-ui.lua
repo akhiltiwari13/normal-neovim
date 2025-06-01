@@ -21,8 +21,8 @@
 --       -> which-key                   [on-screen keybinding]
 
 local utils = require("base.utils")
-local is_windows = vim.fn.has('win32') == 1         -- true if on windows
-local is_android = vim.fn.isdirectory('/data') == 1 -- true if on android
+local is_windows = vim.fn.has("win32") == 1 -- true if on windows
+local is_android = vim.fn.isdirectory("/data") == 1 -- true if on android
 
 return {
 
@@ -37,7 +37,7 @@ return {
         comments = { italic = true },
         keywords = { italic = true },
       },
-    }
+    },
   },
 
   --  astrotheme [theme]
@@ -146,7 +146,6 @@ return {
         }
       end
 
-
       local get_icon = require("base.utils").get_icon
 
       dashboard.section.header.opts.hl = "DashboardHeader"
@@ -154,34 +153,45 @@ return {
 
       -- If yazi is not installed, don't show the button.
       local is_yazi_installed = vim.fn.executable("ya") == 1
-      local yazi_button = dashboard.button("r", get_icon("GreeterYazi") .. " Yazi", "<cmd>Yazi<CR>")
+      local yazi_button = dashboard.button(
+        "r",
+        get_icon("GreeterYazi") .. " Yazi",
+        "<cmd>Yazi<CR>"
+      )
       if not is_yazi_installed then yazi_button = nil end
 
       -- Buttons
       dashboard.section.buttons.val = {
-        dashboard.button("n",
+        dashboard.button(
+          "n",
           get_icon("GreeterNew") .. " New",
-          "<cmd>ene<CR>"),
-        dashboard.button("e",
+          "<cmd>ene<CR>"
+        ),
+        dashboard.button(
+          "e",
           get_icon("GreeterRecent") .. " Recent  ",
-          "<cmd>Telescope oldfiles<CR>"),
+          "<cmd>Telescope oldfiles<CR>"
+        ),
         yazi_button,
-        dashboard.button("s",
+        dashboard.button(
+          "s",
           get_icon("GreeterSessions") .. " Sessions",
           "<cmd>SessionManager! load_session<CR>"
         ),
-        dashboard.button("p",
+        dashboard.button(
+          "p",
           get_icon("GreeterProjects") .. " Projects",
-          "<cmd>Telescope projects<CR>"),
+          "<cmd>Telescope projects<CR>"
+        ),
         dashboard.button("", ""),
         dashboard.button("q", "   Quit", "<cmd>exit<CR>"),
       }
 
       -- Vertical margins
       dashboard.config.layout[1].val =
-          vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above header
+        vim.fn.max({ 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) }) -- Above header
       dashboard.config.layout[3].val =
-          vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above buttons
+        vim.fn.max({ 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) }) -- Above buttons
 
       -- Disable autocmd and return
       dashboard.config.opts.noautocmd = true
@@ -195,7 +205,7 @@ return {
         desc = "Add Alpha dashboard footer",
         once = true,
         callback = function()
-          local  footer_icon = require("base.utils").get_icon("GreeterPlug")
+          local footer_icon = require("base.utils").get_icon("GreeterPlug")
           local stats = require("lazy").stats()
           stats.real_cputime = not is_windows
           local ms = math.floor(stats.startuptime * 100 + 0.5) / 100
@@ -203,7 +213,13 @@ return {
             " ",
             " ",
             " ",
-            "Loaded " .. stats.loaded .. " plugins " .. footer_icon .. " in " .. ms .. "ms",
+            "Loaded "
+              .. stats.loaded
+              .. " plugins "
+              .. footer_icon
+              .. " in "
+              .. ms
+              .. "ms",
             ".............................",
           }
           opts.section.footer.opts.hl = "DashboardFooter"
@@ -221,7 +237,11 @@ return {
     event = "User BaseDefered",
     opts = function()
       local fps
-      if is_android then fps = 30 else fps = 144 end
+      if is_android then
+        fps = 30
+      else
+        fps = 144
+      end
 
       return {
         timeout = 2500,
@@ -285,14 +305,14 @@ return {
             "toggleterm",
             "Trouble",
             "calltree",
-            "coverage"
+            "coverage",
           }
           if vim.tbl_contains(ignored_filetypes, vim.bo.filetype) then
             vim.b.miniindentscope_disable = true
           end
         end,
       })
-    end
+    end,
   },
 
   -- heirline-components.nvim [ui components]
@@ -314,7 +334,7 @@ return {
       return {
         icons = get_icons(),
       }
-    end
+    end,
   },
 
   --  heirline [ui components]
@@ -331,27 +351,28 @@ return {
       return {
         opts = {
           disable_winbar_cb = function(args) -- We do this to avoid showing it on the greeter.
-            local is_disabled = not require("heirline-components.buffer").is_valid(args.buf) or
-                lib.condition.buffer_matches({
-                  buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-                  filetype = {
-                    "NvimTree",
-                    "neo%-tree",
-                    "dashboard",
-                    "Outline",
-                    "aerial",
-                    "rnvimr",
-                    "yazi"
-                  },
-                }, args.buf)
+            local is_disabled = not require("heirline-components.buffer").is_valid(
+              args.buf
+            ) or lib.condition.buffer_matches({
+              buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
+              filetype = {
+                "NvimTree",
+                "neo%-tree",
+                "dashboard",
+                "Outline",
+                "aerial",
+                "rnvimr",
+                "yazi",
+              },
+            }, args.buf)
             return is_disabled
           end,
         },
         tabline = { -- UI upper bar
           lib.component.tabline_conditional_padding(),
           lib.component.tabline_buffers(),
-          lib.component.fill { hl = { bg = "tabline_bg" } },
-          lib.component.tabline_tabpages()
+          lib.component.fill({ hl = { bg = "tabline_bg" } }),
+          lib.component.tabline_tabpages(),
         },
         winbar = { -- UI breadcrumbs bar
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
@@ -376,7 +397,7 @@ return {
             lib.component.fill(),
             lib.component.compiler_redo(),
             lib.component.aerial(),
-          }
+          },
         },
         statuscolumn = { -- UI left column
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
@@ -398,13 +419,13 @@ return {
           lib.component.compiler_state(),
           lib.component.virtual_env(),
           lib.component.nav(),
-          lib.component.mode { surround = { separator = "right" } },
+          lib.component.mode({ surround = { separator = "right" } }),
         },
       }
     end,
     config = function(_, opts)
       local heirline = require("heirline")
-      local heirline_components = require "heirline-components.all"
+      local heirline_components = require("heirline-components.all")
 
       -- Setup
       heirline_components.init.subscribe_to_events()
@@ -423,8 +444,14 @@ return {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       {
+        "nvim-lua/plenary.nvim",
+      },
+      {
         "debugloop/telescope-undo.nvim",
         cmd = "Telescope",
+      },
+      {
+        "jmbuhr/telescope-zotero.nvim",
       },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -492,15 +519,30 @@ return {
       telescope.setup(opts)
       -- Here we define the Telescope extension for all plugins.
       -- If you delete a plugin, you can also delete its Telescope extension.
-      if utils.is_available("nvim-notify") then telescope.load_extension("notify") end
-      if utils.is_available("telescope-fzf-native.nvim") then telescope.load_extension("fzf") end
-      if utils.is_available("telescope-undo.nvim") then telescope.load_extension("undo") end
-      if utils.is_available("project.nvim") then telescope.load_extension("projects") end
-      if utils.is_available("LuaSnip") then telescope.load_extension("luasnip") end
-      if utils.is_available("aerial.nvim") then telescope.load_extension("aerial") end
+      if utils.is_available("nvim-notify") then
+        telescope.load_extension("notify")
+      end
+      if utils.is_available("telescope-fzf-native.nvim") then
+        telescope.load_extension("fzf")
+      end
+      if utils.is_available("telescope-undo.nvim") then
+        telescope.load_extension("undo")
+      end
+      if utils.is_available("project.nvim") then
+        telescope.load_extension("projects")
+      end
+      if utils.is_available("LuaSnip") then
+        telescope.load_extension("luasnip")
+      end
+      if utils.is_available("aerial.nvim") then
+        telescope.load_extension("aerial")
+      end
       if utils.is_available("nvim-neoclip.lua") then
         telescope.load_extension("neoclip")
         telescope.load_extension("macroscope")
+      end
+      if utils.is_available("telescope-zotero.nvim") then
+        telescope.load_extension("zotero")
       end
     end,
   },
@@ -513,7 +555,7 @@ return {
     opts = {
       input = { default_prompt = "➤ " },
       select = { backend = { "telescope", "builtin" } },
-    }
+    },
   },
 
   --  Noice.nvim [better cmd/search line]
@@ -529,11 +571,11 @@ return {
     "folke/noice.nvim",
     event = "User BaseDefered",
     opts = function()
-      local enable_conceal = false          -- Hide command text if true
+      local enable_conceal = false -- Hide command text if true
       return {
         presets = { bottom_search = true }, -- The kind of popup used for /
         cmdline = {
-          view = "cmdline",                 -- The kind of popup used for :
+          view = "cmdline", -- The kind of popup used for :
           format = {
             cmdline = { conceal = enable_conceal },
             search_down = { conceal = enable_conceal },
@@ -542,7 +584,7 @@ return {
             lua = { conceal = enable_conceal },
             help = { conceal = enable_conceal },
             input = { conceal = enable_conceal },
-          }
+          },
         },
 
         -- Disable every other noice feature
@@ -555,7 +597,7 @@ return {
           smart_move = { enabled = false },
         },
       }
-    end
+    end,
   },
 
   --  UI icons [icons]
@@ -567,7 +609,7 @@ return {
     opts = {
       override = {
         default_icon = {
-          icon = require("base.utils").get_icon("DefaultFile")
+          icon = require("base.utils").get_icon("DefaultFile"),
         },
       },
     },
@@ -600,9 +642,7 @@ return {
       },
       menu = {},
     },
-    config = function(_, opts)
-      require("lspkind").init(opts)
-    end,
+    config = function(_, opts) require("lspkind").init(opts) end,
   },
 
   --  nvim-scrollbar [scrollbar]
@@ -613,8 +653,8 @@ return {
     opts = {
       handlers = {
         gitsigns = true, -- gitsigns integration (display hunks)
-        ale = true,      -- lsp integration (display errors/warnings)
-        search = false,  -- hlslens integration (display search result)
+        ale = true, -- lsp integration (display errors/warnings)
+        search = false, -- hlslens integration (display search result)
       },
       excluded_filetypes = {
         "cmp_docs",
@@ -622,7 +662,7 @@ return {
         "noice",
         "prompt",
         "TelescopePrompt",
-        "alpha"
+        "alpha",
       },
     },
   },
@@ -638,7 +678,7 @@ return {
     opts = function()
       -- don't use animate when scrolling with the mouse
       local mouse_scrolled = false
-      for _, scroll in ipairs { "Up", "Down" } do
+      for _, scroll in ipairs({ "Up", "Down" }) do
         local key = "<ScrollWheel" .. scroll .. ">"
         vim.keymap.set({ "", "i" }, key, function()
           mouse_scrolled = true
@@ -650,11 +690,11 @@ return {
       return {
         open = { enable = false }, -- true causes issues on nvim-spectre
         resize = {
-          timing = animate.gen_timing.linear { duration = 33, unit = "total" },
+          timing = animate.gen_timing.linear({ duration = 33, unit = "total" }),
         },
         scroll = {
-          timing = animate.gen_timing.linear { duration = 50, unit = "total" },
-          subscroll = animate.gen_subscroll.equal {
+          timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
+          subscroll = animate.gen_subscroll.equal({
             predicate = function(total_scroll)
               if mouse_scrolled then
                 mouse_scrolled = false
@@ -662,11 +702,11 @@ return {
               end
               return total_scroll > 1
             end,
-          },
+          }),
         },
         cursor = {
           enable = false, -- We don't want cursor ghosting
-          timing = animate.gen_timing.linear { duration = 26, unit = "total" },
+          timing = animate.gen_timing.linear({ duration = 26, unit = "total" }),
         },
       }
     end,
@@ -690,9 +730,7 @@ return {
       vim.api.nvim_create_autocmd("TextYankPost", {
         desc = "Highlight yanked text",
         pattern = "*",
-        callback = function()
-          (vim.hl or vim.highlight).on_yank()
-        end,
+        callback = function() (vim.hl or vim.highlight).on_yank() end,
       })
     end,
   },
@@ -717,6 +755,4 @@ return {
       require("base.utils").which_key_register()
     end,
   },
-
-
 } -- end of return

@@ -405,7 +405,7 @@ maps.n["<leader>bsi"] = {
 }
 maps.n["<leader>bsm"] = {
   function() require("heirline-components.buffer").sort("modified") end,
- desc = "Sort by modification (buffers)",
+  desc = "Sort by modification (buffers)",
 }
 maps.n["<leader>b\\"] = {
   function()
@@ -1036,6 +1036,22 @@ if is_available("telescope.nvim") then
     maps.n["<leader>fu"] = {
       function() require("telescope").extensions.undo.undo() end,
       desc = "Find in undo tree",
+    }
+  end
+
+  -- extra zotero.nvim
+  if is_available("telescope-zotero.nvim") then
+    maps.n["<leader>fzc"] = {
+      function() require("telescope").extensions.zotero.citations() end,
+      desc = "Zotero Citations",
+    }
+    maps.n["<leader>fzb"] = {
+      function() require("telescope").extensions.zotero.bibliography() end,
+      desc = "Zotero Bibliography (.bib)",
+    }
+    maps.n["<leader>fzn"] = {
+      function() require("telescope").extensions.zotero.notes() end,
+      desc = "Zotero Notes",
     }
   end
 

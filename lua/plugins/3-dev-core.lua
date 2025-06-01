@@ -390,6 +390,7 @@ return {
         { path = "telescope.nvim", mods = { "telescope" } },
         { path = "telescope-undo.nvim", mods = { "telescope", "telescope-undo" } },
         { path = "telescope-fzf-native.nvim", mods = { "telescope", "fzf_lib"  } },
+        -- { path = "telescope-zotero.nvim", mods = { "telescope"} },
         { path = "dressing.nvim", mods = { "dressing" } },
         { path = "noice.nvim", mods = { "noice", "telescope" } },
         { path = "nvim-web-devicons", mods = { "nvim-web-devicons" } },
@@ -618,6 +619,7 @@ return {
           { name = "luasnip",  priority = 750 },
           { name = "buffer",   priority = 500 },
           { name = "path",     priority = 250 },
+          { name = "pandoc_references", priority = 200 },
         },
       }
     end,
