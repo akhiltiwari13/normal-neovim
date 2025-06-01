@@ -20,8 +20,8 @@ return {
 
       -- see above for full list of optional dependencies ☝️
     },
-    ---@module 'obsidian'
-    ---@type obsidian.config.ClientOpts
+    --@module 'obsidian'
+    --@type obsidian.config.ClientOpts
     opts = {
       dir = vim.env.HOME .. "/files/notes", -- specify the vault location. no need to call 'vim.fn.expand' here
       use_advanced_uri = true,
